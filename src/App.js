@@ -1,10 +1,11 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
+import Heading from "./component/Title/Heading";
 
 function App() {
   return (
     <>
-      <h1>App </h1>
+      <Heading />
     </>
   );
 }

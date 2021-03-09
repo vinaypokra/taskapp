@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -46,8 +46,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginPage() {
+export default function LoginPage(props) {
   const classes = useStyles();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  if (
+    sessionStorage.getItem("userName") == "test@gmail.com" &&
+    sessionStorage.getItem("password") == "test"
+  ) {
+    props.setLogin(true);
+  }
+  const onLoginSubmit = () => {
+    if (userName == "test@gmail.com" && password == "test") {
+      sessionStorage.setItem("userName", userName);
+      sessionStorage.setItem("password", password);
+      props.setLogin(true);
+    } else {
+      console.log("No entry");
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,16 +76,18 @@ export default function LoginPage() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={onLoginSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="userName"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            label="userName"
+            name="userName"
+            autoComplete="userName"
             autoFocus
           />
           <TextField
@@ -76,16 +95,18 @@ export default function LoginPage() {
             margin="normal"
             required
             fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             name="password"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/*  <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -95,7 +116,7 @@ export default function LoginPage() {
           >
             Sign In
           </Button>
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
@@ -106,12 +127,12 @@ export default function LoginPage() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
-      <Box mt={8}>
+      {/*  <Box mt={8}>
         <Copyright />
-      </Box>
+      </Box> */}
     </Container>
   );
 }

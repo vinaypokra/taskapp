@@ -7,17 +7,18 @@ import "./App.css";
 
 function App() {
   const [userLogin, setLogin] = useState(false);
+
   if (userLogin) {
     return (
       <>
-        <Heading />
+        <Heading setLogin={setLogin} />
         <AddNewTask />
       </>
     );
   } else {
     return (
       <>
-        <LoginPage />
+        <LoginPage setLogin={setLogin} />
       </>
     );
   }

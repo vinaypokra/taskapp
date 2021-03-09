@@ -38,6 +38,12 @@ export default function AddNewTask() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
+  const [data, setData] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [s];
+  console.log(data);
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
@@ -49,6 +55,9 @@ export default function AddNewTask() {
     setOpen(false);
   };
 
+  const handleSubmit = () => {
+    console.log(name);
+  };
   return (
     <div>
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
@@ -73,6 +82,7 @@ export default function AddNewTask() {
                   label="Name"
                   type="name"
                   variant="outlined"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
               <Grid item>
@@ -102,7 +112,7 @@ export default function AddNewTask() {
               </Grid>
               <Grid item>
                 <TextField
-                  id="standard-select-currency"
+                  id="status"
                   select
                   label="Select"
                   value={status}
@@ -124,7 +134,7 @@ export default function AddNewTask() {
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button color="secondary" onClick={handleSubmit}>
             Add
           </Button>
         </DialogActions>

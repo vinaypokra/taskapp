@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import AddNewTask from "./component/AddNewTask/addNewTask";
 import Heading from "./component/Title/Heading";
+import LoginPage from "./component/LoginPage/loginPage";
 import "./App.css";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
   } else {
     return (
       <>
-        <h1>Login First</h1>
+        <LoginPage />
       </>
     );
   }

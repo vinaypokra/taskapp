@@ -33,19 +33,21 @@ const states = [
     label: "Completed",
   },
 ];
-
+const taskData = [];
 export default function AddNewTask() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
-  const [data, setData] = useState("");
+  const data = [];
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [s];
+  const [taskStatus, setTaskStatus] = useState("");
+  var [date, setDate] = useState(new Date());
   console.log(data);
   const handleChange = (event) => {
     setStatus(event.target.value);
+    setTaskStatus(event.target.value);
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,7 +58,18 @@ export default function AddNewTask() {
   };
 
   const handleSubmit = () => {
-    console.log(name);
+    let dateTime = date.toLocaleTimeString().concat(date.toLocaleDateString());
+    dateTime = dateTime.split(" ").join("");
+    dateTime = dateTime.split(":").join("");
+    dateTime = dateTime.split("/").join("");
+    taskData.push({
+      name: name,
+      description: description,
+      deadline: deadline,
+      taskStatus: taskStatus,
+      id: dateTime,
+    });
+    console.log(taskData);
   };
   return (
     <div>
@@ -83,6 +96,7 @@ export default function AddNewTask() {
                   type="name"
                   variant="outlined"
                   onChange={(e) => setName(e.target.value)}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -95,6 +109,8 @@ export default function AddNewTask() {
                   type="description"
                   variant="outlined"
                   rows={4}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -108,6 +124,8 @@ export default function AddNewTask() {
                     shrink: true,
                   }}
                   variant="outlined"
+                  onChange={(e) => setDeadline(e.target.value)}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -119,6 +137,7 @@ export default function AddNewTask() {
                   onChange={handleChange}
                   helperText="Please select your status"
                   variant="outlined"
+                  required
                 >
                   {states.map((data) => (
                     <MenuItem key={data.value} value={data.value}>

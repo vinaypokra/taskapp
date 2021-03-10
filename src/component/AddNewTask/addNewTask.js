@@ -56,6 +56,7 @@ const AddNewTask = (props) => {
         deadline: deadline,
         taskStatus: status,
         id: dateTime,
+        taskDate: props.dateState,
       });
     }
     console.log(taskData);

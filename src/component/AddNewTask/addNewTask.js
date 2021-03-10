@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const states = [
   {
-    value: "",
-    label: "",
-  },
-  {
     value: "Planned",
     label: "Planned",
   },
@@ -45,13 +41,7 @@ export default function AddNewTask() {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
-  const [taskStatus, setTaskStatus] = useState();
-  var [date, setDate] = useState(new Date());
-
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-    setTaskStatus(event.target.value);
-  };
+  const [date, setDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -60,29 +50,29 @@ export default function AddNewTask() {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     let dateTime = date.toLocaleTimeString().concat(date.toLocaleDateString());
     dateTime = dateTime.split(" ").join("");
     dateTime = dateTime.split(":").join("");
     dateTime = dateTime.split("/").join("");
-    if (
-      name !== "" &&
-      description !== "" &&
-      deadline !== "" &&
-      taskStatus !== ""
-    ) {
+    if (name !== "" && description !== "" && deadline !== "" && status !== "") {
       taskData.push({
         name: name,
         description: description,
         deadline: deadline,
-        taskStatus: taskStatus,
+        taskStatus: status,
         id: dateTime,
       });
     }
+    console.log(taskData);
 
     if (taskData.length !== 0) {
       setOpen(false);
     }
+    setName();
+    setDescription();
+    setDeadline();
   };
   return (
     <div>
@@ -94,11 +84,15 @@ export default function AddNewTask() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Add a task for today</DialogContentText>
+        <form
+          className={classes.root}
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Add a task for today</DialogContentText>
 
-          <form className={classes.root} noValidate autoComplete="off">
             <Grid container direction="column">
               <Grid item>
                 <TextField
@@ -109,9 +103,10 @@ export default function AddNewTask() {
                   type="name"
                   variant="outlined"
                   onChange={(e) => setName(e.target.value)}
-                  error={name === ""}
-                  helperText={name === "" ? "Please enter name" : " "}
+                  // error={name === ""}
+                  // helperText={name === "" ? "Please enter name" : " "}
                   required
+                  value={name}
                 />
               </Grid>
               <Grid item>
@@ -125,11 +120,12 @@ export default function AddNewTask() {
                   variant="outlined"
                   rows={4}
                   onChange={(e) => setDescription(e.target.value)}
-                  error={description === ""}
-                  helperText={
-                    description === "" ? "Please enter description" : " "
-                  }
+                  // error={description === ""}
+                  // helperText={
+                  //   description === "" ? "Please enter description" : " "
+                  // }
                   required
+                  value={description}
                 />
               </Grid>
               <Grid item>
@@ -144,11 +140,12 @@ export default function AddNewTask() {
                   }}
                   variant="outlined"
                   onChange={(e) => setDeadline(e.target.value)}
-                  error={deadline === ""}
-                  helperText={
-                    deadline === "" ? "Please enter estimated date" : " "
-                  }
+                  // error={deadline === ""}
+                  // helperText={
+                  //   deadline === "" ? "Please enter estimated date" : " "
+                  // }
                   required
+                  value={deadline}
                 />
               </Grid>
               <Grid item>
@@ -157,30 +154,33 @@ export default function AddNewTask() {
                   select
                   label="Select"
                   value={status}
-                  onChange={handleChange}
-                  helperText={status === "" ? "Please select your status" : " "}
+                  onChange={(e) => setStatus(e.target.value)}
+                  // helperText={status === "" ? "Please select your status" : " "}
                   variant="outlined"
                   required
-                  error={status === ""}
+                  // error={status === ""}
                 >
-                  {states.map((data) => (
-                    <MenuItem key={data.value} value={data.value}>
+                  <MenuItem Selected value="">
+                    Select
+                  </MenuItem>
+                  {states.map((data, key) => (
+                    <MenuItem key={key} value={data.value}>
                       {data.label}
                     </MenuItem>
                   ))}
                 </TextField>
               </Grid>
             </Grid>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button color="secondary" onClick={handleSubmit}>
-            Add
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button color="secondary" type="submit">
+              Add
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

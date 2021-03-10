@@ -85,7 +85,7 @@ export default function LoginPage(props) {
             id="userName"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            label="userName"
+            label="Username"
             name="userName"
             autoComplete="userName"
             autoFocus

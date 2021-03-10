@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
 
 const states = [
   {
+    value: "",
+    label: "",
+  },
+  {
     value: "Planned",
     label: "Planned",
   },
@@ -37,14 +41,13 @@ const taskData = [];
 export default function AddNewTask() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState("");
-  const data = [];
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [taskStatus, setTaskStatus] = useState("");
+  const [status, setStatus] = useState();
+  const [name, setName] = useState();
+  const [description, setDescription] = useState();
+  const [deadline, setDeadline] = useState();
+  const [taskStatus, setTaskStatus] = useState();
   var [date, setDate] = useState(new Date());
-  console.log(data);
+
   const handleChange = (event) => {
     setStatus(event.target.value);
     setTaskStatus(event.target.value);
@@ -62,14 +65,24 @@ export default function AddNewTask() {
     dateTime = dateTime.split(" ").join("");
     dateTime = dateTime.split(":").join("");
     dateTime = dateTime.split("/").join("");
-    taskData.push({
-      name: name,
-      description: description,
-      deadline: deadline,
-      taskStatus: taskStatus,
-      id: dateTime,
-    });
-    console.log(taskData);
+    if (
+      name !== "" &&
+      description !== "" &&
+      deadline !== "" &&
+      taskStatus !== ""
+    ) {
+      taskData.push({
+        name: name,
+        description: description,
+        deadline: deadline,
+        taskStatus: taskStatus,
+        id: dateTime,
+      });
+    }
+
+    if (taskData.length !== 0) {
+      setOpen(false);
+    }
   };
   return (
     <div>
@@ -96,6 +109,8 @@ export default function AddNewTask() {
                   type="name"
                   variant="outlined"
                   onChange={(e) => setName(e.target.value)}
+                  error={name === ""}
+                  helperText={name === "" ? "Please enter name" : " "}
                   required
                 />
               </Grid>
@@ -110,6 +125,10 @@ export default function AddNewTask() {
                   variant="outlined"
                   rows={4}
                   onChange={(e) => setDescription(e.target.value)}
+                  error={description === ""}
+                  helperText={
+                    description === "" ? "Please enter description" : " "
+                  }
                   required
                 />
               </Grid>
@@ -125,6 +144,10 @@ export default function AddNewTask() {
                   }}
                   variant="outlined"
                   onChange={(e) => setDeadline(e.target.value)}
+                  error={deadline === ""}
+                  helperText={
+                    deadline === "" ? "Please enter estimated date" : " "
+                  }
                   required
                 />
               </Grid>
@@ -135,9 +158,10 @@ export default function AddNewTask() {
                   label="Select"
                   value={status}
                   onChange={handleChange}
-                  helperText="Please select your status"
+                  helperText={status === "" ? "Please select your status" : " "}
                   variant="outlined"
                   required
+                  error={status === ""}
                 >
                   {states.map((data) => (
                     <MenuItem key={data.value} value={data.value}>

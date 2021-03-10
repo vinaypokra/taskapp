@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "50ch",
     },
   },
 }));
@@ -34,21 +34,14 @@ const states = [
   },
 ];
 const taskData = [];
-export default function AddNewTask() {
+const AddNewTask = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+
   const [status, setStatus] = useState();
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
   const [date, setDate] = useState(new Date());
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -68,7 +61,7 @@ export default function AddNewTask() {
     console.log(taskData);
 
     if (taskData.length !== 0) {
-      setOpen(false);
+      props.setOpen(false);
     }
     setName();
     setDescription();
@@ -76,12 +69,9 @@ export default function AddNewTask() {
   };
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        Add New Task
-      </Button>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={props.open}
+        onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
         <form
@@ -91,7 +81,9 @@ export default function AddNewTask() {
         >
           <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
           <DialogContent>
-            <DialogContentText>Add a task for today</DialogContentText>
+            <DialogContentText>
+              Add a task for {props.dateState}
+            </DialogContentText>
 
             <Grid container direction="column">
               <Grid item>
@@ -173,7 +165,7 @@ export default function AddNewTask() {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="secondary">
+            <Button onClick={props.handleClose} color="secondary">
               Cancel
             </Button>
             <Button color="secondary" type="submit">
@@ -184,4 +176,6 @@ export default function AddNewTask() {
       </Dialog>
     </div>
   );
-}
+};
+
+export default AddNewTask;

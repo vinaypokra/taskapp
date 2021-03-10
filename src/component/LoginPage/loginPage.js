@@ -51,13 +51,13 @@ export default function LoginPage(props) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   if (
-    sessionStorage.getItem("userName") == "test@gmail.com" &&
-    sessionStorage.getItem("password") == "test"
+    sessionStorage.getItem("userName") === "test@gmail.com" &&
+    sessionStorage.getItem("password") === "test"
   ) {
     props.setLogin(true);
   }
   const onLoginSubmit = () => {
-    if (userName == "test@gmail.com" && password == "test") {
+    if (userName === "test@gmail.com" && password === "test") {
       sessionStorage.setItem("userName", userName);
       sessionStorage.setItem("password", password);
       props.setLogin(true);

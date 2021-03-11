@@ -51,11 +51,12 @@ const AddNewTask = (props) => {
     dateTime = dateTime.split("/").join("");
     if (name !== "" && description !== "" && deadline !== "" && status !== "") {
       taskData.push({
+        id: dateTime,
+        username: sessionStorage.getItem("userName"),
         name: name,
         description: description,
         deadline: deadline,
         taskStatus: status,
-        id: dateTime,
         taskDate: props.dateState,
       });
     }
@@ -99,7 +100,6 @@ const AddNewTask = (props) => {
                   // error={name === ""}
                   // helperText={name === "" ? "Please enter name" : " "}
                   required
-                  value={name}
                 />
               </Grid>
               <Grid item>
@@ -118,7 +118,6 @@ const AddNewTask = (props) => {
                   //   description === "" ? "Please enter description" : " "
                   // }
                   required
-                  value={description}
                 />
               </Grid>
               <Grid item>
@@ -138,7 +137,6 @@ const AddNewTask = (props) => {
                   //   deadline === "" ? "Please enter estimated date" : " "
                   // }
                   required
-                  value={deadline}
                 />
               </Grid>
               <Grid item>
@@ -146,16 +144,13 @@ const AddNewTask = (props) => {
                   id="status"
                   select
                   label="Select"
-                  value={status}
+                  defaultValue={""}
                   onChange={(e) => setStatus(e.target.value)}
                   // helperText={status === "" ? "Please select your status" : " "}
                   variant="outlined"
                   required
                   // error={status === ""}
                 >
-                  <MenuItem Selected value="">
-                    Select
-                  </MenuItem>
                   {states.map((data, key) => (
                     <MenuItem key={key} value={data.value}>
                       {data.label}

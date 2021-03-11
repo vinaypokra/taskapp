@@ -14,8 +14,11 @@ const Heading = (props) => {
         xs={9}
         style={{ margin: "auto" }}
       >
-        <Grid item xs={9}>
+        <Grid item xs={6}>
           <h1>Task Manager </h1>
+        </Grid>
+        <Grid item xs={3}>
+          <h3>{sessionStorage.getItem("userName")}</h3>
         </Grid>
         <Grid item container xs={3} alignItems="flex-end" justify="flex-end">
           <Grid>

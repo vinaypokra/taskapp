@@ -13,9 +13,9 @@ const useStyles = makeStyles({
     "& .MuiTable-root": {
       minWidth: 650,
     },
-    "& .MuiTableHead-root": {
+    "& .MuiTableCell-head": {
       background: "aliceblue",
-      fontWeight: "900",
+      fontWeight: "700",
     },
   },
 });

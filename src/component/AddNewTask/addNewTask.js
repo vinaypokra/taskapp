@@ -66,10 +66,10 @@ const AddNewTask = (props) => {
 
     if (taskData.length !== 0) {
       props.setOpen(false);
+      alert("Task Added Successfully!");
     }
-    setName();
-    setDescription();
-    setDeadline();
+    setName("");
+    setDescription("");
   };
   return (
     <>
@@ -84,7 +84,10 @@ const AddNewTask = (props) => {
           <Grid item xs={8}>
             <TaskTable
               taskData={taskData.filter((val) => {
-                if (val.taskDate === props.dateState) {
+                if (
+                  val.taskDate === props.dateState &&
+                  val.username === sessionStorage.getItem("userName")
+                ) {
                   return val;
                 }
               })}
@@ -110,6 +113,7 @@ const AddNewTask = (props) => {
                       id="name"
                       label="Name"
                       type="name"
+                      value={name}
                       variant="outlined"
                       onChange={(e) => setName(e.target.value)}
                       // error={name === ""}
@@ -126,6 +130,7 @@ const AddNewTask = (props) => {
                       label="Description"
                       type="description"
                       variant="outlined"
+                      value={description}
                       rows={4}
                       onChange={(e) => setDescription(e.target.value)}
                       // error={description === ""}

@@ -39,7 +39,7 @@ const taskData = [];
 const AddNewTask = (props) => {
   const classes = useStyles();
 
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("");
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
@@ -164,7 +164,6 @@ const AddNewTask = (props) => {
                       id="status"
                       select
                       label="Select"
-                      defaultValue={""}
                       onChange={(e) => setStatus(e.target.value)}
                       // helperText={status === "" ? "Please select your status" : " "}
                       variant="outlined"

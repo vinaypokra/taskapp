@@ -10,11 +10,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Grid } from "@material-ui/core";
 
+import TaskTable from "../tableLayout/taskTable";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "50ch",
+      width: "40ch",
     },
   },
 }));
@@ -70,107 +72,122 @@ const AddNewTask = (props) => {
     setDeadline();
   };
   return (
-    <div>
+    <>
       <Dialog
+        fullWidth
+        maxWidth="lg"
         open={props.open}
         onClose={props.handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <form
-          className={classes.root}
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
-          <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Add a task for {props.dateState}
-            </DialogContentText>
+        <Grid container item direction="row">
+          <Grid item xs={8}>
+            <TaskTable
+              taskData={taskData.filter((val) => {
+                if (val.taskDate === props.dateState) {
+                  return val;
+                }
+              })}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <form
+              className={classes.root}
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
+              <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Add a task for {props.dateState}
+                </DialogContentText>
 
-            <Grid container direction="column">
-              <Grid item>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Name"
-                  type="name"
-                  variant="outlined"
-                  onChange={(e) => setName(e.target.value)}
-                  // error={name === ""}
-                  // helperText={name === "" ? "Please enter name" : " "}
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  multiline
-                  label="Description"
-                  type="description"
-                  variant="outlined"
-                  rows={4}
-                  onChange={(e) => setDescription(e.target.value)}
-                  // error={description === ""}
-                  // helperText={
-                  //   description === "" ? "Please enter description" : " "
-                  // }
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="estimate"
-                  label="Estimated date of completion"
-                  type="datetime-local"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  onChange={(e) => setDeadline(e.target.value)}
-                  // error={deadline === ""}
-                  // helperText={
-                  //   deadline === "" ? "Please enter estimated date" : " "
-                  // }
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="status"
-                  select
-                  label="Select"
-                  defaultValue={""}
-                  onChange={(e) => setStatus(e.target.value)}
-                  // helperText={status === "" ? "Please select your status" : " "}
-                  variant="outlined"
-                  required
-                  // error={status === ""}
-                >
-                  {states.map((data, key) => (
-                    <MenuItem key={key} value={data.value}>
-                      {data.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={props.handleClose} color="secondary">
-              Cancel
-            </Button>
-            <Button color="secondary" type="submit">
-              Add
-            </Button>
-          </DialogActions>
-        </form>
+                <Grid container direction="column">
+                  <Grid item>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      label="Name"
+                      type="name"
+                      variant="outlined"
+                      onChange={(e) => setName(e.target.value)}
+                      // error={name === ""}
+                      // helperText={name === "" ? "Please enter name" : " "}
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      multiline
+                      label="Description"
+                      type="description"
+                      variant="outlined"
+                      rows={4}
+                      onChange={(e) => setDescription(e.target.value)}
+                      // error={description === ""}
+                      // helperText={
+                      //   description === "" ? "Please enter description" : " "
+                      // }
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="estimate"
+                      label="Estimated date of completion"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      variant="outlined"
+                      onChange={(e) => setDeadline(e.target.value)}
+                      // error={deadline === ""}
+                      // helperText={
+                      //   deadline === "" ? "Please enter estimated date" : " "
+                      // }
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      id="status"
+                      select
+                      label="Select"
+                      defaultValue={""}
+                      onChange={(e) => setStatus(e.target.value)}
+                      // helperText={status === "" ? "Please select your status" : " "}
+                      variant="outlined"
+                      required
+                      // error={status === ""}
+                    >
+                      {states.map((data, key) => (
+                        <MenuItem key={key} value={data.value}>
+                          {data.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                </Grid>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={props.handleClose} color="secondary">
+                  Cancel
+                </Button>
+                <Button color="secondary" type="submit">
+                  Add
+                </Button>
+              </DialogActions>
+            </form>
+          </Grid>
+        </Grid>
       </Dialog>
-    </div>
+    </>
   );
 };
 

@@ -9,12 +9,14 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  head: {
-    background: "aliceblue",
-    fontWeight: " bold",
+  root: {
+    "& .MuiTable-root": {
+      minWidth: 650,
+    },
+    "& .MuiTableHead-root": {
+      background: "aliceblue",
+      fontWeight: "900",
+    },
   },
 });
 
@@ -23,9 +25,9 @@ const TaskTable = (props) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.root} aria-label="simple table">
         <TableHead>
-          <TableRow className={classes.head}>
+          <TableRow>
             <TableCell align="left">Task Date</TableCell>
             <TableCell align="left">Name</TableCell>
             <TableCell align="left">Deadline</TableCell>

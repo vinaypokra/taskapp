@@ -1,5 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { withRouter, Redirect } from "react-router";
+import SignUp from "./SignUp";
 import app from "./base.js";
 import { AuthContext } from "./Auth.js";
 import Avatar from "@material-ui/core/Avatar";
@@ -8,7 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -120,23 +122,21 @@ const Login = ({ history }) => {
           >
             Sign In
           </Button>
-          {/* <Grid container>
-            <Grid item xs>
+          <Grid container>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link to="/signup"> {"Don't have an account? Sign Up"}</Link>
             </Grid>
-          </Grid> */}
+          </Grid>
         </form>
       </div>
-      {/*  <Box mt={8}>
+      <Box mt={8}>
         <Copyright />
-      </Box> */}
+      </Box>
     </Container>
   );
 };

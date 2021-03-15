@@ -41,6 +41,7 @@ const AddNewTask = (props) => {
 
   const [status, setStatus] = useState();
   const [name, setName] = useState();
+  const [tag, setTag] = useState([]);
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
   const [date, setDate] = useState(new Date());
@@ -60,6 +61,7 @@ const AddNewTask = (props) => {
         deadline: deadline,
         taskStatus: status,
         taskDate: props.dateState,
+        tag: tag.split(" "),
       });
     }
     console.log(taskData);
@@ -137,6 +139,21 @@ const AddNewTask = (props) => {
                       // helperText={
                       //   description === "" ? "Please enter description" : " "
                       // }
+                      required
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="tag"
+                      label="Assigned to"
+                      type="tag"
+                      value={tag}
+                      variant="outlined"
+                      onChange={(e) => setTag(e.target.value)}
+                      // error={name === ""}
+                      // helperText={name === "" ? "Please enter name" : " "}
                       required
                     />
                   </Grid>

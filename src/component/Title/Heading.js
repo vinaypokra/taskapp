@@ -1,6 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import app from "../../base";
+
 const Heading = (props) => {
   return (
     <>
@@ -25,10 +27,7 @@ const Heading = (props) => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => {
-                sessionStorage.clear();
-                props.setLogin(false);
-              }}
+              onClick={() => app.auth().signOut()}
             >
               LogOut
             </Button>

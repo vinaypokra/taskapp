@@ -2,6 +2,8 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import app from "../../base";
+import { Link } from "react-router-dom";
+import DashBoard from "../DashBoard";
 
 const Heading = (props) => {
   return (
@@ -21,6 +23,8 @@ const Heading = (props) => {
         </Grid>
         <Grid item xs={3}>
           <h3>{sessionStorage.getItem("userName")}</h3>
+          <Link to="/DashBoard">{"DashBoard"}</Link>
+          <Link to="/">{"Home"}</Link>
         </Grid>
         <Grid item container xs={3} alignItems="flex-end" justify="flex-end">
           <Grid>

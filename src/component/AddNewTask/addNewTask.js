@@ -213,3 +213,4 @@ const AddNewTask = (props) => {
 };
 
 export default AddNewTask;
+export { taskData };

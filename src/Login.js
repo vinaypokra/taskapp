@@ -73,7 +73,7 @@ const Login = ({ history }) => {
 
   if (currentUser) {
     sessionStorage.setItem("userName", currentUser.email);
-    console.log(currentUser.email);
+
     return <Redirect to="/" />;
   }
 

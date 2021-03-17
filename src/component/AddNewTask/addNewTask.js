@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
+
 import { Grid } from "@material-ui/core";
 
 import TaskTable from "../tableLayout/taskTable";
@@ -21,25 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const states = [
-  {
-    value: "Planned",
-    label: "Planned",
-  },
-  {
-    value: "In progress",
-    label: "In progress",
-  },
-  {
-    value: "Completed",
-    label: "Completed",
-  },
-];
 const taskData = [];
 const AddNewTask = (props) => {
   const classes = useStyles();
 
-  const [status, setStatus] = useState("");
   const [name, setName] = useState();
   const [tag, setTag] = useState([]);
   const [description, setDescription] = useState();
@@ -52,14 +37,14 @@ const AddNewTask = (props) => {
     dateTime = dateTime.split(" ").join("");
     dateTime = dateTime.split(":").join("");
     dateTime = dateTime.split("/").join("");
-    if (name !== "" && description !== "" && deadline !== "" && status !== "") {
+    if (name !== "" && description !== "" && deadline !== "") {
       taskData.push({
         id: dateTime,
         username: sessionStorage.getItem("userName"),
         name: name,
         description: description,
         deadline: deadline,
-        taskStatus: status,
+        taskStatus: "",
         taskDate: props.dateState,
         tag: tag.split(" "),
       });
@@ -83,133 +68,122 @@ const AddNewTask = (props) => {
         aria-labelledby="form-dialog-title"
       >
         <Grid container item direction="row">
-          <Grid item xs={8}>
+          <Grid
+            item
+            xs={
+              sessionStorage.getItem("userName") === "admin@gmail.com" ? 8 : 12
+            }
+          >
             <TaskTable
+              handleClose={props.handleClose}
               taskData={taskData.filter((val) => {
-                if (
-                  val.taskDate === props.dateState &&
-                  val.username === sessionStorage.getItem("userName")
-                ) {
-                  return val;
-                }
                 for (let i = 0; i < val.tag.length; i++) {
-                  if (val.tag[i] === sessionStorage.getItem("userName")) {
-                    return taskData;
+                  if (val.taskDate === props.dateState) {
+                    if (
+                      val.tag[i] === sessionStorage.getItem("userName") ||
+                      sessionStorage.getItem("userName") === "admin@gmail.com"
+                    ) {
+                      return val;
+                    }
                   }
                 }
               })}
             />
           </Grid>
           <Grid item xs={4}>
-            <form
-              className={classes.root}
-              autoComplete="off"
-              onSubmit={handleSubmit}
-            >
-              <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Add a task for {props.dateState}
-                </DialogContentText>
+            {sessionStorage.getItem("userName") === "admin@gmail.com" ? (
+              <form
+                className={classes.root}
+                autoComplete="off"
+                onSubmit={handleSubmit}
+              >
+                <DialogTitle id="form-dialog-title">Add a task</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Add a task for {props.dateState}
+                  </DialogContentText>
 
-                <Grid container direction="column">
-                  <Grid item>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Name"
-                      type="name"
-                      value={name}
-                      variant="outlined"
-                      onChange={(e) => setName(e.target.value)}
-                      // error={name === ""}
-                      // helperText={name === "" ? "Please enter name" : " "}
-                      required
-                    />
+                  <Grid container direction="column">
+                    <Grid item>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Name"
+                        type="name"
+                        value={name}
+                        variant="outlined"
+                        onChange={(e) => setName(e.target.value)}
+                        // error={name === ""}
+                        // helperText={name === "" ? "Please enter name" : " "}
+                        required
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        multiline
+                        label="Description"
+                        type="description"
+                        variant="outlined"
+                        value={description}
+                        rows={4}
+                        onChange={(e) => setDescription(e.target.value)}
+                        // error={description === ""}
+                        // helperText={
+                        //   description === "" ? "Please enter description" : " "
+                        // }
+                        required
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="tag"
+                        label="Assigned to"
+                        type="tag"
+                        value={tag}
+                        variant="outlined"
+                        onChange={(e) => setTag(e.target.value)}
+                        // error={name === ""}
+                        // helperText={name === "" ? "Please enter name" : " "}
+                        required
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="estimate"
+                        label="Estimated date of completion"
+                        type="datetime-local"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        variant="outlined"
+                        onChange={(e) => setDeadline(e.target.value)}
+                        // error={deadline === ""}
+                        // helperText={
+                        //   deadline === "" ? "Please enter estimated date" : " "
+                        // }
+                        required
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      multiline
-                      label="Description"
-                      type="description"
-                      variant="outlined"
-                      value={description}
-                      rows={4}
-                      onChange={(e) => setDescription(e.target.value)}
-                      // error={description === ""}
-                      // helperText={
-                      //   description === "" ? "Please enter description" : " "
-                      // }
-                      required
-                    />
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="tag"
-                      label="Assigned to"
-                      type="tag"
-                      value={tag}
-                      variant="outlined"
-                      onChange={(e) => setTag(e.target.value)}
-                      // error={name === ""}
-                      // helperText={name === "" ? "Please enter name" : " "}
-                      required
-                    />
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="estimate"
-                      label="Estimated date of completion"
-                      type="datetime-local"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      variant="outlined"
-                      onChange={(e) => setDeadline(e.target.value)}
-                      // error={deadline === ""}
-                      // helperText={
-                      //   deadline === "" ? "Please enter estimated date" : " "
-                      // }
-                      required
-                    />
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      id="status"
-                      select
-                      label="Select"
-                      onChange={(e) => setStatus(e.target.value)}
-                      // helperText={status === "" ? "Please select your status" : " "}
-                      variant="outlined"
-                      required
-                      // error={status === ""}
-                    >
-                      {states.map((data, key) => (
-                        <MenuItem key={key} value={data.value}>
-                          {data.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={props.handleClose} color="secondary">
-                  Cancel
-                </Button>
-                <Button color="secondary" type="submit">
-                  Add
-                </Button>
-              </DialogActions>
-            </form>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={props.handleClose} color="secondary">
+                    Cancel
+                  </Button>
+                  <Button color="secondary" type="submit">
+                    Add
+                  </Button>
+                </DialogActions>
+              </form>
+            ) : null}
           </Grid>
         </Grid>
       </Dialog>

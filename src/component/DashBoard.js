@@ -18,7 +18,7 @@ const DashBoard = () => {
             taskData={taskData.filter((val) => {
               for (let i = 0; i < val.tag.length; i++) {
                 if (val.tag[i] === sessionStorage.getItem("userName")) {
-                  return taskData;
+                  return val;
                 }
               }
             })}

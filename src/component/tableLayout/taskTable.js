@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,6 +9,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { taskData } from "../AddNewTask/addNewTask";
 
 const useStyles = makeStyles({
   root: {
@@ -19,10 +22,34 @@ const useStyles = makeStyles({
     },
   },
 });
+const states = [
+  {
+    value: "",
+    label: "Update Status",
+  },
+  {
+    value: "Planned",
+    label: "Planned",
+  },
+  {
+    value: "In progress",
+    label: "In progress",
+  },
+  {
+    value: "Completed",
+    label: "Completed",
+  },
+];
 
-const TaskTable = (props) => {
+const TaskTable = ({ handleClose, ...props }) => {
+  const [status, setStatus] = useState("");
   const classes = useStyles();
-
+  const handleSubmit = (event, key) => {
+    event.preventDefault();
+    alert("yes");
+    taskData[key].taskStatus = status;
+    handleClose();
+  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.root} aria-label="simple table">
@@ -33,6 +60,9 @@ const TaskTable = (props) => {
             <TableCell align="left">Deadline</TableCell>
             <TableCell align="left">Description</TableCell>
             <TableCell align="left">Status</TableCell>
+            {sessionStorage.getItem("userName") !== "admin@gmail.com" ? (
+              <TableCell align="left">Update</TableCell>
+            ) : null}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,6 +73,23 @@ const TaskTable = (props) => {
               <TableCell align="left">{row.deadline}</TableCell>
               <TableCell align="left">{row.description}</TableCell>
               <TableCell align="left">{row.taskStatus}</TableCell>
+              {sessionStorage.getItem("userName") !== "admin@gmail.com" ? (
+                <TableCell style={{ width: "50px" }} align="left">
+                  <select
+                    onChange={(e) => {
+                      setStatus(e.target.value);
+                      console.log(status);
+                    }}
+                  >
+                    {states.map((data, i) => (
+                      <option key={i} value={data.value}>
+                        {data.label}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={(e) => handleSubmit(e, key)}>Add</button>
+                </TableCell>
+              ) : null}
             </TableRow>
           ))}
         </TableBody>

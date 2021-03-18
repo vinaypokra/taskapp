@@ -29,7 +29,7 @@ const AddNewTask = (props) => {
   const [tag, setTag] = useState([]);
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
-  const [date, setDate] = useState(new Date());
+  const date = new Date();
 
   const handleSubmit = (event) => {
     event.preventDefault();

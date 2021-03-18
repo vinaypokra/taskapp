@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import CreateContext from "react";
 import "./App.css";
-import AddNewTask from "./component/AddNewTask/addNewTask";
 import Heading from "./component/Title/Heading";
 
 import "./App.css";

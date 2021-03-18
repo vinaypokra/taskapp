@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import app from "../../base";
 import { Link } from "react-router-dom";
-import DashBoard from "../DashBoard";
 
 const Heading = (props) => {
   return (

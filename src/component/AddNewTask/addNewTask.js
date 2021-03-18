@@ -87,6 +87,7 @@ const AddNewTask = (props) => {
                     }
                   }
                 }
+                return false;
               })}
             />
           </Grid>

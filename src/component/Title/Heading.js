@@ -30,7 +30,10 @@ const Heading = (props) => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => app.auth().signOut()}
+              onClick={() => {
+                sessionStorage.clear();
+                app.auth().signOut();
+              }}
             >
               LogOut
             </Button>

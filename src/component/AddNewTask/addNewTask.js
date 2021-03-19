@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 
 import TaskTable from "../tableLayout/taskTable";
-
+import { db } from "../../base";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -21,7 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const taskData = [];
+var taskData = [];
+const fetchData = () => {
+  db.collection("taskdata")
+    .doc("taskData")
+    .get()
+    .then((snapshot) => {
+      taskData = snapshot.data().taskData;
+    });
+};
+
 const AddNewTask = (props) => {
   const classes = useStyles();
 
@@ -31,6 +40,9 @@ const AddNewTask = (props) => {
   const [deadline, setDeadline] = useState();
   const date = new Date();
 
+  React.useEffect(() => {
+    fetchData();
+  }, [taskData]);
   const handleSubmit = (event) => {
     event.preventDefault();
     let dateTime = date.toLocaleTimeString().concat(date.toLocaleDateString());
@@ -48,6 +60,7 @@ const AddNewTask = (props) => {
         taskDate: props.dateState,
         tag: tag.split(" "),
       });
+      let setdata = db.collection("taskdata").doc("taskData").set({ taskData });
     }
     console.log(taskData);
 

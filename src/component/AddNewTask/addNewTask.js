@@ -38,11 +38,11 @@ const AddNewTask = (props) => {
   const [tag, setTag] = useState([]);
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState();
-  const date = new Date();
+  const [date, setDate] = useState(new Date());
 
   React.useEffect(() => {
     fetchData();
-  }, [taskData]);
+  }, []);
   const handleSubmit = (event) => {
     event.preventDefault();
     let dateTime = date.toLocaleTimeString().concat(date.toLocaleDateString());
@@ -78,8 +78,10 @@ const AddNewTask = (props) => {
         maxWidth="lg"
         open={props.open}
         onClose={props.handleClose}
+        onClick={() => setDate(new Date())}
         aria-labelledby="form-dialog-title"
       >
+        {`Current Date :${date}`}
         <Grid container item direction="row">
           <Grid
             item

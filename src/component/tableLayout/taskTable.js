@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { taskData } from "../AddNewTask/addNewTask";
-
+import { db } from "../../base";
 const useStyles = makeStyles({
   root: {
     "& .MuiTable-root": {
@@ -46,6 +46,8 @@ const TaskTable = ({ handleClose, ...props }) => {
     event.preventDefault();
     alert("yes");
     taskData[key].taskStatus = status;
+    db.collection("taskdata").doc("taskData").set({ taskData });
+
     handleClose();
   };
   return (

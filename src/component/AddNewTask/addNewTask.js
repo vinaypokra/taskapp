@@ -60,7 +60,7 @@ const AddNewTask = (props) => {
         taskDate: props.dateState,
         tag: tag.split(" "),
       });
-      let setdata = db.collection("taskdata").doc("taskData").set({ taskData });
+      db.collection("taskdata").doc("taskData").set({ taskData });
     }
     console.log(taskData);
 

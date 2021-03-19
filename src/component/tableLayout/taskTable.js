@@ -39,19 +39,27 @@ const states = [
   },
 ];
 
-const TaskTable = ({ handleClose, ...props }) => {
+const TaskTable = ({ ...props }) => {
   const [status, setStatus] = useState("");
+  const [message, setMsg] = useState("");
   const classes = useStyles();
+
   const handleSubmit = (event, key) => {
     event.preventDefault();
-    alert("yes");
-    taskData[key].taskStatus = status;
+    for (var i = 0; i < taskData.length; i++) {
+      if (taskData[i].id === key) {
+        taskData[i].taskStatus = status;
+      }
+    }
+    setMsg("Value Updated");
+    setTimeout(() => {
+      setMsg("");
+    }, 1000);
     db.collection("taskdata").doc("taskData").set({ taskData });
-
-    handleClose();
   };
   return (
     <TableContainer component={Paper}>
+      <p>{message}</p>
       <Table className={classes.root} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -87,7 +95,7 @@ const TaskTable = ({ handleClose, ...props }) => {
                       </option>
                     ))}
                   </select>
-                  <button onClick={(e) => handleSubmit(e, key)}>Add</button>
+                  <button onClick={(e) => handleSubmit(e, row.id)}>Add</button>
                 </TableCell>
               ) : null}
             </TableRow>

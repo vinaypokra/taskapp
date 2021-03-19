@@ -88,7 +88,6 @@ const AddNewTask = (props) => {
             }
           >
             <TaskTable
-              handleClose={props.handleClose}
               taskData={taskData.filter((val) => {
                 for (let i = 0; i < val.tag.length; i++) {
                   if (val.taskDate === props.dateState) {

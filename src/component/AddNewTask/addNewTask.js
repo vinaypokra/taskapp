@@ -29,6 +29,7 @@ const fetchData = () => {
     .then((snapshot) => {
       taskData = snapshot.data().taskData;
     });
+  console.log(taskData);
 };
 
 const AddNewTask = (props) => {
@@ -62,7 +63,6 @@ const AddNewTask = (props) => {
       });
       db.collection("taskdata").doc("taskData").set({ taskData });
     }
-    console.log(taskData);
 
     if (taskData.length !== 0) {
       props.setOpen(false);
